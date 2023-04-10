@@ -8,11 +8,15 @@ void main() {
   final int money2 = 100; // yanda ki gibi yazabiliriz fakat..
 
   if (money1 > 100) {
-    print("Beyefendi");
+    print("Hos geldiniz Beyefendi");
+  } else {
+    print("yetersiz");
   }
 
   if (money2 > 100) {
-    print("Yetersiz");
+    print("Hos geldiniz Beyefendi");
+  } else {
+    print("yetersiz");
   }
 
   // Yukarıdaki gibi yazarsak işimiz çok uzayacak bunun için
