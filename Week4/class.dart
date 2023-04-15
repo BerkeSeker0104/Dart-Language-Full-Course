@@ -7,6 +7,10 @@ edelim.
 
  */
 
+import 'model/user_model.dart';
+
+import "model/user_model_2.dart";
+
 void main() {
   // musteri adi var, parasi var, yasi var bla bla...
 
@@ -15,7 +19,7 @@ void main() {
   final int customerAge = 23;
   final String customerCity = "İstanbul";
 
-  // bu musterimin yasi 10 buyukse bir işlem yapalım
+  // bu musterimin yasi 10'dan buyukse bir işlem yapalım
   controlCustomerAge(customerAge);
 
   // yeni müşteri geliyor yine aynı alanlar
@@ -92,13 +96,18 @@ void main() {
 
   // bool veri tipi ikili değer alır ve bunlar true ve false
 
-  user user1 = user("Özge", 1000, age: 22, city: "Bulgaristan");
+  user user1 = user("Özge", 1000, age: 22, city: "Bulgaristan", id: '12');
   // user1 artık özellikleri var artık bunları kullanabilirz
 
   print(user1.age); // yaş özelliğini kullandık
+  print(user1.money);
 
-  user user2 = user("Berke", 1000);
+  user user2 = user("Berke", 1000, id: '456');
   print(user2.name);
+  //print(user2._id); id artık gitti çünkü classı user_model taşıdım
+  // id şu an burada gözüküyor ama class başka dosya yazdığında
+  // id gizlenmiş olacak.
+  //bunun yararı ise burada bunu işlemini bitirmiş oluyorum.
 
   // gelen müşterinin city istanbul ise kampanya kazanadı
 
@@ -109,6 +118,20 @@ void main() {
       print("Tebrikler kampanyayı kazandınız!");
     }
   }
+
+  // musteri idsi 12 olana kampanya parasi ekle :
+  if (user1.isSpecialUser("12")) {
+    user1.money += 5;
+    print("Kampanya parasi eklendi, mevcut bakiye ${user1.money}");
+  }
+
+  print("-----------------------");
+
+  User2 newUser2 = User2("Gorke", 18, 500);
+  print(newUser2.age);
+  print(newUser2.money);
+  newUser2.money += 5;
+  print(newUser2.money);
 }
 
 void controlCustomerAge(int value) {
@@ -125,24 +148,4 @@ int? controlMoney(int? money) {
   }
 } //yukarıda ki kodda "||"(veya) yaparak iki tane if kullandık
 
-//adi olmak zorunda
-//parası olmak zorunda
-//yasini vermeyebilir
-//citysini vermeyebilir
 
-class user {
-  //müşterinin özellikleri neler ?
-  late final String
-      name; /* "late" dememizin sebebi sonradan
-   değer alıcağını söylüyoruz.*/
-  late final int money;
-  late final int? age;
-  late final String? city;
-// yaşı ve şehri opsiyonel yaptım "{int? age, String? city}"
-  user(String name, int money, {int? age, String? city}) {
-    this.name = name; /*"this." demek yukarıda ki name ile eşitlemek*/
-    this.money = money;
-    this.age = age;
-    this.city = city;
-  }
-}
