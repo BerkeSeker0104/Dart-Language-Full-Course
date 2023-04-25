@@ -6,6 +6,12 @@ void main() {
   final bankUser1 = bankUser("Görke", 150, 123);
 
   bankUser1.sayMoneyWithCompanyName();
+
+  final userSpecial = specialUser("Özge", 2000, 05062001, 50);
+
+  print(userSpecial.calculateMoney);
+
+  print(userSpecial.money); // ana para değişmez çünkü sadece hesaplandı.
 }
 
 // bütün classlarda paraları görebilmek istiyorum
@@ -57,17 +63,19 @@ class specialUser extends IUser {
   final String name;
   final int money;
   final int bankingCode;
-  final int disccount;
+  late final int _disccount;
 
-  specialUser(this.name, this.money, this.bankingCode, this.disccount)
-      : super(name, money);
+  specialUser(this.name, this.money, this.bankingCode, int disccount)
+      : super(name, money) {
+    _disccount = disccount;
+  }
 
   /* void sayMoneyWithCompanyName() {
     print("Ahmet- $money paraniz vardir.");
   }
   */
 
-  int get calculateMoney => money - (money ~/ disccount);
+  int get calculateMoney => money - (money ~/ _disccount);
   /*
   get ve set değişkenler üzerinde işlem yapabilmemizi sağlayan basit fonksiyonlardır.
   Get fonksiyonumuzu döndürür. Set fonskiyonumuz da değer atar.
