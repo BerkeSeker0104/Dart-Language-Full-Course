@@ -44,7 +44,7 @@ class student implements iStudent {
   int? schoolId;
 }
 
-class student2 {
+class student2 implements iStudent {
   final String name;
   final int age;
 
