@@ -1,42 +1,65 @@
 void main(List<String> args) {
-  final User = _User("Berke", age: 17);
+  final user = _User('veli', age: 21);
 
-  // Musterinin yasi 18den kucuk kontrolu yapar misin ?
+  // msuterinin yasi 18den kucuk kotnrolu yaparmisin
 
-  if (User.age is int) {
-    if (User.age! < 18) {
-      print("evet kucuk");
-      User.updateMoneyWithString("TR");
+  // if ((user.age ?? 10) < 18) {}
+
+  if (user.age is! int) {
+    if (user.age! < 18) {
+      print('evet kucuk');
+      user.updateMoneyWithString("TR");
+    } else {
+      user.updateMoneyWithNumber(15);
     }
-  } else {
-    User.updateMoneyWithNumber(15);
   }
 
-  // kullanicilarin parasi var ama paranin tipi degisken olabilir,
-  // parasi olan adamin o parametresi bir isimde olabilir veya deger olabilir
-  // tr yazacak ya da orada  yazabilir
+  // kullancilarimin parasi var ama paranin tipi degisken olabilir
+  // parasi olan admin o paramtresi bir isimde olabilir veya deger olablilir
+  // tr yazacak yada orada 15 yazabilir
   // ekranda goster
-  final _newType = User.moneyType is String ? (User.moneyType as String) : "";
+  final _newType = user.moneyType is String ? (user.moneyType as String) : "";
 
   print(_newType + "A");
+  // =====
+  int money1 = 50;
+  int money2 = 50;
 
-  final moneyBank1 = Bank(40, "12");
-  final moneyBank2 = Bank(30, "12");
+  if (money1 == money2) {
+    print('ok');
+  }
+
+  final moneyBank1 = Bank(40, '12');
+  final moneyBank2 = Bank(30, '12');
 
   print(moneyBank1 == moneyBank2);
   final newResult = "a" + "a";
 
-  // musteri banka sinifindan iki kisinin parasini toplayip sonucunu söyler misin?
+  // musteri banka sinfindan iki kisinin parasini  topayip soucu soylermisin
 
-  print(moneyBank1 + moneyBank2); // metot ile dahil ettik.
+  print(moneyBank1 + moneyBank2);
 
-  // benim bankama gelen müşterimin id leri aynı müşteri olmalıdır.
+  // benim bankma gelen musterlmiin idsi ayni onanlar ayni musteri olmaldir
   print(moneyBank1.toString());
   print(moneyBank1 == moneyBank2);
+
+  // diger bankadan bir modul aldik bunu ekleyip musterinin parasini sorgularmisin
+
+  // musteri adamin parasina 10tl ekle ekrana dondur, adamin idsini 1 artir sonrasinda ismini veli yap
+
+  moneyBank1.money += 10;
+  print(moneyBank1.money);
+
+  moneyBank1
+    ..money += 10
+    ..updateName('veli');
+
+  print(moneyBank1);
 }
 
 class _User {
   final String name;
+
   int? age;
 
   dynamic moneyType;
@@ -52,23 +75,46 @@ class _User {
   }
 }
 
-class Bank {
-  final int money;
+class Bank with BankMixin {
+  int money;
   final String id;
+  String? name;
 
   Bank(this.money, this.id);
 
   int operator +(Bank newBank) {
-    return this.money + newBank.money;
-  } // metot ile dahil ettik.
+    return money + newBank.money;
+  }
 
-  @override
-  String toString() {
-    return super.toString() + "Veli";
+  void updateName(String name) {
+    this.name = name;
   }
 
   @override
-  bool operator ==(Object object) {
-    return object is Bank && object.id == id;
-  } // bu koşulu sağlıyorsa bu datalar benim için aydnıdr.
+  String toString() {
+    return super.toString() + 'veli';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Bank && other.id == id;
+  }
+
+  @override
+  int get hashCode => money.hashCode ^ id.hashCode;
+
+  @override
+  void sayBankHello() {
+    calculateMoney(money);
+  }
+}
+
+mixin BankMixin {
+  void sayBankHello();
+
+  void calculateMoney(int money) {
+    print('money');
+  }
 }
